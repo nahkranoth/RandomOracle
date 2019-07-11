@@ -1,5 +1,4 @@
 const https = require('https');
-const RMath = require('./utils/RMath');
 
 class WeatherInteger{
     request(res){
@@ -12,7 +11,6 @@ class WeatherInteger{
             resp.on('end', () => {
                 let main = JSON.parse(response)["liveweer"][0];
                 let temp = main["temp"];
-                //var weighted = new RMath().monteCarlo();
                 res.json( temp );
             });
         });
