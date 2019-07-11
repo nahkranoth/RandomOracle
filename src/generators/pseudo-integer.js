@@ -1,5 +1,5 @@
 class PseudoInteger{
-    constructor(){
+    constructor(settings){
     }
 
     request(res){

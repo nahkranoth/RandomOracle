@@ -1,7 +1,7 @@
 var WeatherInteger = import('../generators/weather-integer.js');
 
 class Set{
-    constructor(){
+    constructor(settings, ){
 
     }
     request(){

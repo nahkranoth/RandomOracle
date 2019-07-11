@@ -1,6 +1,7 @@
 var bodyParser = require('body-parser');
 var PseudoInteger = require('./generators/pseudo-integer');
 var WeatherInteger = require('./generators/weather-integer');
+var SetStructure = require('./structures/set');
 
 class Router{
     constructor(app){
@@ -29,22 +30,28 @@ class Router{
     buildResponse(req, res){
         //deconstruct option parameters
         //handle options
-            //get generator data
-            //feed into structure
-        //return
+            //get structure
+            //let it retrieve data from generator
+
         let params = req.body;
         let generator = params.generator;
-        let generator_settings = params.generator_settings;
+        let generator_settings = JSON.parse(params.generator_settings);
         let structure = params.structure;
-        let structure_settings = params.structure_settings;
+        let structure_settings = JSON.parse(params.structure_settings);
 
-        return res.json( params );
+        let activeGenerator;
+        let activeStructure;
+
+        if(generator === "psuedo-int"){
+            activeGenerator = new PseudoInteger(generator_settings);
+        }
+
+        if(structure === "set"){
+            activeStructure = new SetStructure(structure_settings, activeGenerator); //should also pass the right generator with it's right settings
+        }
+
+        return res.json( generator_settings["min"] );
     }
-
-    deconstructOptions(req, res){
-
-    }
-
 }
 
 module.exports = Router;
