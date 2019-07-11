@@ -3,18 +3,33 @@ var Pseudo = require('./generators/pseudo');
 var WeatherInteger = require('./generators/weather-integer');
 var MonteCarloMethod = require('./methods/monte-carlo');
 var SetStructure = require('./structures/set');
+var MustacheExpress = require('mustache-express');
 
 class Router{
     constructor(app){
+
+        app.engine('html', MustacheExpress());
+        app.set('view engine', 'html');
+        app.set('views', __dirname + '/views');
+
         app.get('/favicon.ico', (req, res) => res.status(204));
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({
             extended: true
         }));
 
+        app.get('/', (req, res) => {
+            res.render("test.html", {"test":123});
+        });
+
+        //app.get('/', (req, res) => { this.buildView(req, res) });
         app.post('/*', (req, res) => { this.buildResponse(req, res) });
     }
 
+
+    buildView(req, res){
+        //How do a reply with a html/javascript
+    }
 
     //TODO: This info and code should not be part of the router for now it's good
 
