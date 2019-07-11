@@ -30,27 +30,30 @@ class Router{
     buildResponse(req, res){
         //deconstruct option parameters
         //handle options
+            //init generator with data
             //get structure
             //let it retrieve data from generator
 
         let params = req.body;
         let generator = params.generator;
-        let generator_settings = JSON.parse(params.generator_settings);
+        let generator_settings = params.generator_settings ? JSON.parse(params.generator_settings) : null;
         let structure = params.structure;
         let structure_settings = JSON.parse(params.structure_settings);
 
         let activeGenerator;
         let activeStructure;
 
-        if(generator === "psuedo-int"){
+        console.log(generator);
+
+        if(generator === "pseudo-int"){
             activeGenerator = new PseudoInteger(generator_settings);
         }
 
         if(structure === "set"){
-            activeStructure = new SetStructure(structure_settings, activeGenerator); //should also pass the right generator with it's right settings
+            activeStructure = new SetStructure(structure_settings, activeGenerator);
         }
 
-        return res.json( generator_settings["min"] );
+        return res.json( activeStructure.request() );
     }
 }
 

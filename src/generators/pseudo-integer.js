@@ -1,15 +1,17 @@
 class PseudoInteger{
     constructor(settings){
+        this.min = settings["min"] ? settings["min"] : 0;
+        this.max = settings["max"] ? settings["max"] : 1;
     }
 
-    request(res){
-        return res.json(Math.round(Math.random()*10));
+    request(){
+        return this.requestMinMax()
     }
 
-    requestMinMax(res, min, max){
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return res.json(Math.floor(Math.random() * (max - min)) + min);
+    requestMinMax(){
+        let mi = Math.ceil(this.min);
+        let ma = Math.floor(this.max);
+        return Math.floor(Math.random() * (ma - mi)) + mi;
     }
 
 }
