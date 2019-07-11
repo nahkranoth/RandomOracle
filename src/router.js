@@ -1,5 +1,6 @@
 var bodyParser = require('body-parser');
 var PseudoInteger = require('./generators/pseudo-integer');
+var PseudoFloat = require('./generators/pseudo-float');
 var WeatherInteger = require('./generators/weather-integer');
 var SetStructure = require('./structures/set');
 
@@ -13,6 +14,9 @@ class Router{
 
         app.post('/*', (req, res) => { this.buildResponse(req, res) });
     }
+
+
+    //TODO: This info and code should not be part of the router for now it's good
 
     // Generators generate a single number from a specific source.
     // Manipulators manipulate that number
@@ -29,13 +33,7 @@ class Router{
     // structure:               specify structure
     // structure_settings:      specific structure settings
 
-    //TODO: Should not be part of the router for now it's good
     buildResponse(req, res){
-        //deconstruct option parameters
-        //handle options
-            //init generator with data
-            //get structure
-            //let it retrieve data from generator
 
         let params = req.body;
         let generator = params.generator;
@@ -46,10 +44,11 @@ class Router{
         let activeGenerator;
         let activeStructure;
 
-
         //TODO: Make mapping dictionary for generators, structures and manipulators
         if(generator === "pseudo-int"){
             activeGenerator = new PseudoInteger(generator_settings);
+        }else if(generator === "pseudo-float"){
+            activeGenerator = new PseudoFloat(generator_settings);
         }
 
         if(structure === "set"){
