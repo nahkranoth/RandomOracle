@@ -1,3 +1,4 @@
+var express = require('express');
 var bodyParser = require('body-parser');
 var Pseudo = require('./generators/pseudo');
 var WeatherInteger = require('./generators/weather-integer');
@@ -10,8 +11,8 @@ class Router{
 
         app.engine('html', MustacheExpress());
         app.set('view engine', 'html');
-        app.set('views', __dirname + '/views');
-
+        app.set('views', __dirname + '/views/templates');
+        app.use(express.static(__dirname + '/views/scripts'));
         app.get('/favicon.ico', (req, res) => res.status(204));
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({
