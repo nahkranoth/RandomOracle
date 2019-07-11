@@ -1,8 +1,9 @@
-var WeatherInteger = require('../generators/weather-integer.js');
-
 class Set{
     constructor(settings, generator){
-        this.amount = settings["amount"];
+        this.amount = 1;
+        if(settings){
+            this.amount = settings["amount"] ? settings["amount"] : this.amount;
+        }
         this.generator = generator;
         this.generateResponse();
     }

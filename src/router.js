@@ -5,10 +5,6 @@ var SetStructure = require('./structures/set');
 
 class Router{
     constructor(app){
-       /* app.get("/pseudo-int", (req, res) => { new PseudoInteger().request(res); });
-        app.get("/pseudo-int/:minrange/:maxrange", (req, res) => { new PseudoInteger().requestMinMax(res, req.params.minrange, req.params.maxrange) });
-        app.get("/weather-int", async (req, res) => { new WeatherInteger().request(res) });*/
-
         app.get('/favicon.ico', (req, res) => res.status(204));
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({
@@ -18,13 +14,20 @@ class Router{
         app.post('/*', (req, res) => { this.buildResponse(req, res) });
     }
 
+    // Generators generate a single number from a specific source.
+    // Manipulators manipulate that number
+    // Structures represent the numbers, in a data format. This can be as a single number, sequence of numbers, or specific data structure.
+    // Note that these parameters are sent as a x-www-form-url-encoded Body in the HTTP(S) calls.
+    // Without this it's not going to do anything
 
     // A POST Call can have the following body params:
 
-    // generator:           specify generator
-    // generator_settings:  specific generator config
-    // structure:           specify structure
-    // structure_settings:  specific structure settings
+    // generator:               specify generator
+    // generator_settings:      specific generator config
+    // manipulator:           specify manipulator
+    // manipulator_settings:  specify manipulator settings
+    // structure:               specify structure
+    // structure_settings:      specific structure settings
 
     //TODO: Should not be part of the router for now it's good
     buildResponse(req, res){
@@ -36,15 +39,15 @@ class Router{
 
         let params = req.body;
         let generator = params.generator;
-        let generator_settings = params.generator_settings ? JSON.parse(params.generator_settings) : null;
+        let generator_settings = params.generator_settings ? JSON.parse(params.generator_settings) : undefined;
         let structure = params.structure;
         let structure_settings = JSON.parse(params.structure_settings);
 
         let activeGenerator;
         let activeStructure;
 
-        console.log(generator);
 
+        //TODO: Make mapping dictionary for generators, structures and manipulators
         if(generator === "pseudo-int"){
             activeGenerator = new PseudoInteger(generator_settings);
         }
