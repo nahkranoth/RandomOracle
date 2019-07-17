@@ -5,31 +5,30 @@ var WeatherInteger = require('./generators/weather-integer');
 var MonteCarloMethod = require('./methods/monte-carlo');
 var SetStructure = require('./structures/set');
 var MustacheExpress = require('mustache-express');
+var cors = require('cors');
 
 class Router{
     constructor(app){
 
         app.engine('html', MustacheExpress());
         app.set('view engine', 'html');
-        app.set('views', __dirname + '/views/templates');
-        app.use(express.static(__dirname + '/views/scripts'));
+        app.set('views', __dirname + '/dist');
+        app.use(cors());
+        app.use(express.static(__dirname + '/dist'));
         app.get('/favicon.ico', (req, res) => res.status(204));
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({
             extended: true
         }));
 
+        //APP GET ROUTE
         app.get('/', (req, res) => {
-            res.render("test.html", {"test":123});
+            let config = JSON.stringify({a:"test", b:"test2"});
+            res.render("main.html", { 'config':  config  });
         });
 
-        //app.get('/', (req, res) => { this.buildView(req, res) });
+        //API POST ROUTE
         app.post('/*', (req, res) => { this.buildResponse(req, res) });
-    }
-
-
-    buildView(req, res){
-        //How do a reply with a html/javascript
     }
 
     //TODO: This info and code should not be part of the router for now it's good
