@@ -16,10 +16,7 @@ class Router{
         app.use(cors());
         app.use(express.static(__dirname + '/dist'));
         app.get('/favicon.ico', (req, res) => res.status(204));
-        app.use(bodyParser.json());
-        app.use(bodyParser.urlencoded({
-            extended: true
-        }));
+        app.use(express.json());
 
         //APP GET ROUTE
         app.get('/', (req, res) => {
@@ -51,14 +48,13 @@ class Router{
     // structure_settings:  specific structure settings
 
     buildResponse(req, res){
-
         let params = req.body;
         let generator = params.generator;
-        let generator_settings = params.generator_settings ? JSON.parse(params.generator_settings) : undefined;
+        let generator_settings = params.generator_settings ? params.generator_settings : undefined;
         let method = params.method;
-        let method_settings = params.method_settings ? JSON.parse(params.method_settings) : undefined;
+        let method_settings = params.method_settings ? params.method_settings : undefined;
         let structure = params.structure;
-        let structure_settings = JSON.parse(params.structure_settings);
+        let structure_settings = params.structure_settings;
 
         let activeGenerator;
         let activeMethod;
