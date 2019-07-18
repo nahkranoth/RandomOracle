@@ -15,37 +15,36 @@ class App{
         }
 
         var trace1 = {
-            x: dataList,
-            y: dataIndexList,
+            x: dataIndexList,
+            y: dataList,
             mode: 'markers',
             type: 'scatter',
             name: 'Team A',
             text: ['A-1', 'A-2', 'A-3', 'A-4', 'A-5'],
-            marker: { size: 12 }
+            marker: { size: 4 }
         };
 
         var layout = {
             xaxis: {
-                range: [ 0, 44]
+                range: [0, 440]
             },
             yaxis: {
-                range: [0, 44]
+                range: [0, 100]
             },
             title:'Data Labels Hover'
         };
         Plotly.newPlot('gd', [trace1], layout);
-        //Plotly.plot("gd", [{ x: [0, 1], y: [0, 1] }]);
     }
 
-    postData(url = '', data = {}) {
+    postData() {
 
         let postData = {
             "generator":"pseudo",
             "generator_settings":{},
             "structure":"set",
-            "structure_settings": {"amount":44, "min":0, "max":44},
-            "method":"monte-carlo",
-            "method_settings": {"weight":0.1}
+            "structure_settings": {"amount":440, "min":0, "max":40},
+            "method":"gaussian",
+            "method_settings": {"weight":0.9}
         };
 
         // Default options are marked with *
