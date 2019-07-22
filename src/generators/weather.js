@@ -1,6 +1,6 @@
 const https = require('https');
 
-class WeatherInteger{
+class Weather{
     request(res){
         https.get("https://weerlive.nl/api/json-data-10min.php?key=demo&locatie=Amsterdam", (resp) => {
             let response = '';
@@ -16,4 +16,4 @@ class WeatherInteger{
         });
     }
 }
-module.exports = WeatherInteger;
+module.exports = Weather;
