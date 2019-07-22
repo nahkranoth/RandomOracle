@@ -1,5 +1,5 @@
 class Set{
-    constructor(settings, generator){
+    constructor(settings, method){
         this.amount = 1;
         this.min = 0;
         this.max = 10;
@@ -8,13 +8,17 @@ class Set{
             this.min = settings["min"] ? settings["min"] : this.min;
             this.max = settings["max"] ? settings["max"] : this.max;
         }
-        this.generator = generator;
+        this.method = method;
         this.generateResponse();
     }
+
     generateResponse(){
         this.list = [];
         for(var i=0;i<this.amount;i++){
-            this.list.push(this.minMax(this.generator.request()));
+
+            let num = this.method.request(); //should be a promise
+
+            this.list.push(this.minMax(num));
         }
     }
 

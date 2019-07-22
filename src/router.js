@@ -1,12 +1,13 @@
 var express = require('express');
+var cors = require('cors');
+var MustacheExpress = require('mustache-express');
+
 var bodyParser = require('body-parser');
 var Pseudo = require('./generators/pseudo');
-var WeatherInteger = require('./generators/weather-integer');
+var Weather = require('./generators/weather');
 var GaussianMethod = require('./methods/gaussian');
 var SetStructure = require('./structures/set');
 var TwoDeeSetStructure = require('./structures/2d-set');
-var MustacheExpress = require('mustache-express');
-var cors = require('cors');
 
 class Router{
     constructor(app){
@@ -66,10 +67,14 @@ class Router{
         //Order matters, one feeds into the other
         if(generator === "pseudo"){
             activeGenerator = new Pseudo(generator_settings);
+        }else if(generator === "weather"){
+            activeGenerator = new Weather(generator_settings);
         }
 
         if(method === "gaussian"){
             activeMethod = new GaussianMethod(method_settings, activeGenerator);
+        }else{
+            activeMethod = activeGenerator;
         }
 
         if(structure === "set"){
