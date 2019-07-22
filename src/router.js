@@ -2,7 +2,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var Pseudo = require('./generators/pseudo');
 var WeatherInteger = require('./generators/weather-integer');
-var MonteCarloMethod = require('./methods/monte-carlo');
 var GaussianMethod = require('./methods/gaussian');
 var SetStructure = require('./structures/set');
 var MustacheExpress = require('mustache-express');
@@ -68,9 +67,7 @@ class Router{
             activeGenerator = new Pseudo(generator_settings);
         }
 
-        if(method === "monte-carlo"){
-            activeMethod = new MonteCarloMethod(method_settings, activeGenerator);
-        }else if(method === "gaussian"){
+        if(method === "gaussian"){
             activeMethod = new GaussianMethod(method_settings, activeGenerator);
         }
 
