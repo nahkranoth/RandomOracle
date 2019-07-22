@@ -1,10 +1,16 @@
 //Guassian normal distribution
 class Gaussian{
     constructor(settings){
+        this.mean = 1;
+        this.standardDev = 0;
+        if (settings) {
+            this.mean = settings["mean"] ? settings["mean"] : this.mean;
+            this.standardDev = settings["standard_deviation"] ? settings["standard_deviation"] : this.standardDev;
+        }
     }
 
     request(){
-        return this.gaussianRandAdj(0.1, 0.5);
+        return this.gaussianRandAdj(this.mean, this.standardDev);
     }
 
     gaussianRand() {

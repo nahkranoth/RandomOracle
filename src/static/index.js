@@ -26,7 +26,7 @@ class App{
 
         var layout = {
             xaxis: {
-                range: [0, 440]
+                range: [0, 100]
             },
             yaxis: {
                 range: [0, 100]
@@ -44,7 +44,7 @@ class App{
             "structure":"set",
             "structure_settings": {"amount":440, "min":0, "max":40},
             "method":"gaussian",
-            "method_settings": {"weight":0.9}
+            "method_settings": {"mean":0.5, "standard_deviation":0.1}
         };
 
         // Default options are marked with *
