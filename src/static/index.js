@@ -8,15 +8,9 @@ class App{
 
     displayData(data){
         let dataList = JSON.parse(data);
-
-        let dataIndexList = [];
-        for(var i=0;i<dataList.length;i++){
-            dataIndexList.push(i);
-        }
-
         var trace1 = {
-            x: dataIndexList,
-            y: dataList,
+            x: dataList.X,
+            y: dataList.Y,
             mode: 'markers',
             type: 'scatter',
             name: 'Team A',
@@ -41,10 +35,10 @@ class App{
         let postData = {
             "generator":"pseudo",
             "generator_settings":{},
-            "structure":"set",
-            "structure_settings": {"amount":440, "min":0, "max":40},
+            "structure":"2d-set",
+            "structure_settings": {"amount":940, "minX":0, "maxX":100, "minY":0, "maxY":100},
             "method":"gaussian",
-            "method_settings": {"mean":0.5, "standard_deviation":0.1}
+            "method_settings": {"mean":0.5, "standard_deviation":0.05}
         };
 
         // Default options are marked with *

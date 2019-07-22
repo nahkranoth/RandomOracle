@@ -4,6 +4,7 @@ var Pseudo = require('./generators/pseudo');
 var WeatherInteger = require('./generators/weather-integer');
 var GaussianMethod = require('./methods/gaussian');
 var SetStructure = require('./structures/set');
+var TwoDeeSetStructure = require('./structures/2d-set');
 var MustacheExpress = require('mustache-express');
 var cors = require('cors');
 
@@ -20,8 +21,8 @@ class Router{
 
         //APP GET ROUTE
         app.get('/', (req, res) => {
-            let config = JSON.stringify({a:"test", b:"test2"});
-            res.render("main.html", { 'config':  config  });
+            //let config = JSON.stringify({a:"test", b:"test2"});
+            res.render("main.html");
         });
 
         //API POST ROUTE
@@ -73,6 +74,8 @@ class Router{
 
         if(structure === "set"){
             activeStructure = new SetStructure(structure_settings, activeMethod);
+        }else if(structure === "2d-set"){
+            activeStructure = new TwoDeeSetStructure(structure_settings, activeMethod);
         }
 
         return res.json( activeStructure.request() );
