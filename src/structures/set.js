@@ -16,7 +16,7 @@ class Set{
         this.list = [];
         for(var i=0;i<this.amount;i++){
 
-            let num = this.method.request(); //should be a promise
+            let num = this.method.request(); //TODO: should be ALL be a promise
 
             this.list.push(this.minMax(num));
         }
