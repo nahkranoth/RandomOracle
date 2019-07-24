@@ -15,37 +15,24 @@ class TwoDeeSet{
         }
         this.generator = generator;
     }
-
-    async generateResponse(){
+    
+    generateResponse(){
         this.listX = [];
         this.listY = [];
 
-        return new Promise((resolve) => {
+        return new Promise(async (resolve) => {
             for(var i=0;i<this.amount;i++){
-                await this.generator.request();
-
-                
-                .then(
-                    (value) =>{
-                        this.listX.push(this.minMax(value, this.minX, this.maxX));
-                    }
-                ).then(() =>{ this.isResponseReady(resolve) });
+                let x = await this.generator.request();
+                this.listX.push(this.minMax(x, this.minX, this.maxX));
             }
 
             for(i=0;i<this.amount;i++){
-                this.generator.request().then(
-                    (value) =>{
-                        this.listY.push(this.minMax(value, this.minY, this.maxY));
-                    }
-                ).then(() =>{ this.isResponseReady(resolve) });
+                let y = await this.generator.request();
+                this.listY.push(this.minMax(y, this.minY, this.maxY));
             }
-        });
-    }
 
-    isResponseReady(resolve){
-        if(this.listX.length === this.amount && this.listY.length === this.amount){
             resolve();
-        }
+        });
     }
 
     minMax(val, min, max){
