@@ -35,7 +35,7 @@ class App{
         let postData = {
             "generator":"pseudo",
             "generator_settings":{},
-            "method":"",
+            "method":"gaussian",
             "method_settings": {"mean":0.5, "standard_deviation":0.05},
             "structure":"2d-set",
             "structure_settings": {"amount":940, "minX":0, "maxX":100, "minY":0, "maxY":100}

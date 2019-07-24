@@ -15,13 +15,17 @@ class TwoDeeSet{
         }
         this.generator = generator;
     }
-    generateResponse(){
+
+    async generateResponse(){
         this.listX = [];
         this.listY = [];
 
         return new Promise((resolve) => {
             for(var i=0;i<this.amount;i++){
-                this.generator.request().then(
+                await this.generator.request();
+
+                
+                .then(
                     (value) =>{
                         this.listX.push(this.minMax(value, this.minX, this.maxX));
                     }
