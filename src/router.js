@@ -83,7 +83,9 @@ class Router{
             activeStructure = new TwoDeeSetStructure(structure_settings, activeMethod);
         }
 
-        return res.json( activeStructure.request() );
+        activeStructure.request().then((data) => {
+            return res.json( data );
+        });
     }
 }
 

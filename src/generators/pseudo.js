@@ -3,7 +3,9 @@ class Pseudo{
     }
 
     request(){
-        return Math.random();
+        return new Promise((resolve, reject) => {
+            resolve(Math.random())
+        });
     }
 }
 module.exports = Pseudo;

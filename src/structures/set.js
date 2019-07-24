@@ -1,5 +1,17 @@
 class Set{
-    constructor(settings, method){
+    generateResponse(){
+        this.list = [];
+        for(var i=0;i<this.amount;i++){
+            let num = this.method.request(); //TODO: should be ALL be a promise
+            this.list.push(this.minMax(num));
+        }
+    }
+
+    minMax(val){
+        return val * (this.max - this.min) + this.min;
+    }
+
+    request(settings, method){
         this.amount = 1;
         this.min = 0;
         this.max = 10;
@@ -10,23 +22,7 @@ class Set{
         }
         this.method = method;
         this.generateResponse();
-    }
 
-    generateResponse(){
-        this.list = [];
-        for(var i=0;i<this.amount;i++){
-
-            let num = this.method.request(); //TODO: should be ALL be a promise
-
-            this.list.push(this.minMax(num));
-        }
-    }
-
-    minMax(val){
-        return val * (this.max - this.min) + this.min;
-    }
-
-    request(){
         return JSON.stringify(this.list);
     }
 }
