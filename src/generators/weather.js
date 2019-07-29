@@ -31,26 +31,28 @@ class Weather{
             }
         };
 
-        var req = https.request(options, function (res) {
-            var chunks = [];
+        return new Promise((resolve, reject) => {
+            var req = https.request(options, function (res) {
+                var chunks = [];
 
-            res.on("data", function (chunk) {
-                chunks.push(chunk);
+                res.on("data", function (chunk) {
+                    chunks.push(chunk);
+                });
+
+                res.on("end", function (chunk) {
+                    let body = Buffer.concat(chunks);
+                    let json_obj = JSON.parse(body.toString());
+                    let mean_temp = json_obj["features"][0]["properties"]["mean_temperature"];
+                    resolve(mean_temp);
+                });
+
+                res.on("error", function (error) {
+                    console.error(error);
+                });
             });
 
-            res.on("end", function (chunk) {
-                let body = Buffer.concat(chunks);
-                let json_obj = JSON.parse(body.toString());
-                let mean_temp = json_obj["features"][0]["properties"]["mean_temperature"];
-                return mean_temp;
-            });
-
-            res.on("error", function (error) {
-                console.error(error);
-            });
+            req.end();
         });
-
-        req.end();
     }
 }
 module.exports = Weather;
