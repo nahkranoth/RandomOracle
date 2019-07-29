@@ -4,6 +4,8 @@ const https = require('https');
 //There is an authentication key involved
 //TODO: More info on the settings should be added
 
+//TODO: it now does a call for every request to the origin server, change this so it collects the data only once
+
 class Weather{
     constructor(settings){
         this.meteostation = 240;    //Schiphol

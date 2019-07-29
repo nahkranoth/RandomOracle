@@ -47,7 +47,7 @@ class App{
             "method":"none",
             "method_settings": {},
             "structure":"set",
-            "structure_settings": {"amount":10, "min":-99999, "max":99999}
+            "structure_settings": {"amount":120, "min":0, "max":10}
         };
 
         // Default options are marked with *

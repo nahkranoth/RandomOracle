@@ -28,7 +28,11 @@ class Set{
     request(){
         return new Promise((resolve, reject) => {
             this.generateResponse().then(() => {
-                resolve( JSON.stringify(this.list) );
+                let xList = [];
+                for(var i=0;i<this.list.length;i++){
+                    xList.push(i);
+                }
+                resolve( JSON.stringify({X: xList, Y:this.list}) );
             });
         });
     }
