@@ -65,18 +65,22 @@ class Router{
         //TODO: Make mapping dictionary for generators, structures and methods
 
         //Order matters, one feeds into the other
+
+        //Generators are always returning normalized values
         if(generator === "pseudo"){
             activeGenerator = new Pseudo(generator_settings);
         }else if(generator === "weather"){
             activeGenerator = new Weather(generator_settings);
         }
 
+        //Methods are always returning normalized values
         if(method === "gaussian"){
             activeMethod = new GaussianMethod(method_settings, activeGenerator);
         }else{
             activeMethod = activeGenerator;
         }
 
+        //Structures structure and reformat the raw normalized values back into a domain
         if(structure === "set"){
             activeStructure = new SetStructure(structure_settings, activeMethod);
         }else if(structure === "2d-set"){

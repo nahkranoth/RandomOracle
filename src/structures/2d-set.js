@@ -1,5 +1,5 @@
 class TwoDeeSet{
-    constructor(settings, generator){
+    constructor(settings, method){
         this.amount = 1;
         this.minX = 0;
         this.maxX = 10;
@@ -13,26 +13,22 @@ class TwoDeeSet{
             this.minY = settings["minY"] ? settings["minY"] : this.minY;
             this.maxY = settings["maxY"] ? settings["maxY"] : this.maxY;
         }
-        this.generator = generator;
+        this.method = method;
     }
     
-    generateResponse(){
+    async generateResponse(){
         this.listX = [];
         this.listY = [];
 
-        return new Promise(async (resolve) => {
-            for(var i=0;i<this.amount;i++){
-                let x = await this.generator.request();
-                this.listX.push(this.minMax(x, this.minX, this.maxX));
-            }
+        for(var i=0;i<this.amount;i++){
+            let x = await this.method.request();
+            this.listX.push(this.minMax(x, this.minX, this.maxX));
+        }
 
-            for(i=0;i<this.amount;i++){
-                let y = await this.generator.request();
-                this.listY.push(this.minMax(y, this.minY, this.maxY));
-            }
-
-            resolve();
-        });
+        for(i=0;i<this.amount;i++){
+            let y = await this.method.request();
+            this.listY.push(this.minMax(y, this.minY, this.maxY));
+        }
     }
 
     minMax(val, min, max){

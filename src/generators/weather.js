@@ -6,13 +6,17 @@ const https = require('https');
 
 class Weather{
     constructor(settings){
-        this.meteostation = 240;//Schiphol
-        this.fromdate = "20180101";//YYYYMMDD
-        this.todate = "20180130";
+        this.meteostation = 240;    //Schiphol
+        this.fromdate = "20180101"; //YYYYMMDD
+        this.todate = "20180130";   //YYYYMMDD
+        this.coldest = -90;         //celsius
+        this.warmest = 60;          //celsius
+    }
 
-        if (settings) {
-            //this.mean = settings["mean"] ? settings["mean"] : this.mean;
-        }
+    normalizeTemp(temp){
+        //normalizes along the coldest and warmest temps measured on planet earth
+        //TODO: Change max temperature when global warming increases
+        return (temp-this.coldest)/(this.warmest-this.coldest)
     }
 
     request(res){
@@ -32,18 +36,20 @@ class Weather{
         };
 
         return new Promise((resolve, reject) => {
-            var req = https.request(options, function (res) {
+            var req = https.request(options, (res) => {
                 var chunks = [];
 
                 res.on("data", function (chunk) {
                     chunks.push(chunk);
                 });
 
-                res.on("end", function (chunk) {
+                res.on("end", (chunk) => {
                     let body = Buffer.concat(chunks);
                     let json_obj = JSON.parse(body.toString());
-                    let mean_temp = json_obj["features"][0]["properties"]["mean_temperature"];
-                    resolve(mean_temp);
+                    //TODO random mean_temperature between specified dates
+                    let mean_temp = json_obj["features"][0]["properties"]["mean_temperature"]; //takes the first mean temp
+                    let normalized_mean_temp = this.normalizeTemp(mean_temp);
+                    resolve(normalized_mean_temp);
                 });
 
                 res.on("error", function (error) {
